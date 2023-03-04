@@ -18,3 +18,9 @@ export async function getTopRatedMovies(pageNumber = 1) {
     const response = await axiosInstance.get(url, { params });
     return response;
 }
+
+export async function getMovieDetails(id) {
+    const url = `${API_BASE_URL}/movie/${id}`;
+    const response = await axiosInstance.get(url);
+    return response;
+}

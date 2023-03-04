@@ -1,16 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-    RouterProvider,
-} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
-import router from './router';
+import TopBar from './components/TopBar';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MoviePage from './components/MoviePage';
+import MovieDetail from './components/MovieDetail';
+import { TABS } from './constants';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <Router>
+            <TopBar tabs={TABS} />
+            <Routes>
+                <Route path="/" element={<MoviePage />} />
+                <Route exact path="/movie/now_playing" element={<MoviePage />} />
+                <Route exact path="/movie/top_rated" element={<MoviePage />} />
+                <Route path="/movie/:id" element={<MovieDetail />} />
+            </Routes>
+        </Router>
     </React.StrictMode>
 );
 

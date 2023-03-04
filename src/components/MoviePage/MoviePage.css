@@ -1,0 +1,30 @@
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -10px;
+}
+
+.movie-card {
+  width: calc(20% - 20px);
+  margin: 0 10px 20px;
+  /* Adjust these values as needed for spacing and responsiveness */
+}
+
+@media (max-width: 991px) {
+  .movie-card {
+    width: calc(25% - 20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .movie-card {
+    width: calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 575px) {
+  .movie-card {
+    width: calc(50% - 20px);
+  }
+}
