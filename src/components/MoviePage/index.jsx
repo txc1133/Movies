@@ -11,6 +11,7 @@ function MoviePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function MoviePage() {
       console.error(error);
     } finally {
       setIsLoading(false);
+      setIsRefreshing(false);
     }
   }
 
@@ -42,14 +44,49 @@ function MoviePage() {
     fetchMovies(pageNumber);
   }
 
+  function handleTouchStart(event) {
+    if (event.touches.length !== 1) return;
+    setIsRefreshing(false);
+  }
+
+  function handleTouchMove(event) {
+    if (event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const isTop = window.scrollY === 0;
+    const isMovingDown = touch.clientY > startY;
+    if (isTop && isMovingDown) {
+      event.preventDefault();
+      setIsRefreshing(true)
+    }
+  }
+
+  function handleTouchEnd(event) {
+    if (isRefreshing && window.scrollY === 0) {
+      fetchMovies();
+    }
+  }
+
+  let startY = 0;
+  useEffect(() => {
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove, { passive: false });
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
         <>
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+          {isRefreshing && <p>Refreshing...</p>}
+          <div className="movie-grid">
             {movies.map((movie) => (
-              <div key={movie.id} className="col">
+              <div key={movie.id} className="movie-card">
                 <MovieCard movie={movie} />
               </div>
             ))}
