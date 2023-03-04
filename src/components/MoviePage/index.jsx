@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MovieCard from "../MovieCard";
 import Pagination from "../Pagination";
 import { getNowPlayingMovies, getTopRatedMovies } from "../../services/movies";
 import { useLocation } from "react-router-dom";
 import { TABS } from "../../constants";
-import "./MoviePage.css";
+import MovieList from "../MovieList";
+import MovieGrid from "../MovieGrid";
+import SegmentedControl from "../SegmentedControl";
 
 function MoviePage() {
   const [movies, setMovies] = useState([]);
@@ -12,6 +13,7 @@ function MoviePage() {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isGridView, setIsGridView] = useState(true);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -84,14 +86,17 @@ function MoviePage() {
       {!isLoading && (
         <>
           {isRefreshing && <p>Refreshing...</p>}
-          <div className="movie-grid">
-            {movies.map((movie) => (
-              <div key={movie.id} className="movie-card">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
+          <div className="d-flex justify-content-end">
+            <SegmentedControl
+              activeTab={isGridView ? 'grid' : 'list'}
+              onChange={(view) => setIsGridView(view === 'grid')}
+            />
           </div>
-
+          {isGridView ? (
+            <MovieGrid movies={movies} />
+          ) : (
+            <MovieList movies={movies} />
+          )}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
