@@ -30,6 +30,8 @@ function useFetchMovies(pathname, query = null) {
   }
 
   useEffect(() => {
+    setIsLoading(true);
+    setCurrentPage(1);
     fetchMovies();
   }, [pathname, query]);
 
