@@ -1,3 +1,6 @@
+import React from "react";
+import "./SkeletonMovieCard.css";
+
 function SkeletonMovieCard() {
   return (
     <div className="card h-100">

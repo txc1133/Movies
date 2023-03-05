@@ -6,6 +6,8 @@ import { TABS } from "../../constants";
 import MovieList from "../MovieList";
 import MovieGrid from "../MovieGrid";
 import SegmentedControl from "../SegmentedControl";
+import SkeletonMovieCard from "../SkeletonMovieCard";
+import "../MovieGrid/MovieGrid.css";
 
 function MoviePage() {
   const [movies, setMovies] = useState([]);
@@ -82,7 +84,15 @@ function MoviePage() {
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && (
+        <div className="movie-grid">
+          {Array.from({ length: 20 }, (_, index) => (
+            <div key={index} className="movie-card">
+              <SkeletonMovieCard />
+            </div>
+          ))}
+        </div>
+      )}
       {!isLoading && (
         <>
           {isRefreshing && <p>Refreshing...</p>}
