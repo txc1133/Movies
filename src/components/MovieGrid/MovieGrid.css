@@ -6,6 +6,7 @@
 }
 
 @media screen and (max-width: 1200px) {
+
   /* Medium screens */
   .movie-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -13,6 +14,7 @@
 }
 
 @media screen and (max-width: 992px) {
+
   /* Small screens */
   .movie-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -20,6 +22,7 @@
 }
 
 @media screen and (max-width: 768px) {
+
   /* Extra small screens */
   .movie-grid {
     grid-template-columns: repeat(2, 1fr);

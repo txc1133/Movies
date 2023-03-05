@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function TopBar({ tabs, selectedTab, onTabChange, onSearch }) {
+function TopBar({ tabs }) {
   const [searchText, setSearchText] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const navigate = useNavigate();
 
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
   };
 
-  const handleSearchSubmit = (event) => {
+  const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    onSearch(searchText);
+    navigate(`/search/movie?query=${searchText}`);
   };
 
   const toggleNavbar = () => {
@@ -39,15 +40,29 @@ function TopBar({ tabs, selectedTab, onTabChange, onSearch }) {
             <li className="nav-item" key={tab.id}>
               <Link
                 to={`movie/${tab.id}`}
-                className={`nav-link ${selectedTab === tab.id ? "active" : ""
-                  }`}
-                onClick={() => onTabChange(tab.id)}
+                className={`nav-link active`}
               >
                 {tab.name}
               </Link>
             </li>
           ))}
         </ul>
+        <form className="form-inline ml-auto" onSubmit={handleSearchSubmit}>
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search"
+              value={searchText}
+              onChange={handleSearchTextChange}
+            />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="submit">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </nav>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
-import { getNowPlayingMovies, getTopRatedMovies } from "../../services/movies";
+import { getNowPlayingMovies, getTopRatedMovies, searchMovies } from "../../services/movies";
 import { useLocation } from "react-router-dom";
 import { TABS } from "../../constants";
 import MovieList from "../MovieList";
@@ -16,7 +16,8 @@ function MoviePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isGridView, setIsGridView] = useState(true);
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const query = new URLSearchParams(search).get('query');
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,6 +32,8 @@ function MoviePage() {
         response = await getNowPlayingMovies(pageNumber);
       } else if (pathname === TABS[1].endpoint) {
         response = await getTopRatedMovies(pageNumber);
+      } else if (pathname === '/search/movie') {
+        response = await searchMovies(pageNumber, query);
       }
 
       setMovies(response.results);
