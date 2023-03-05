@@ -8,7 +8,7 @@ function MovieGrid(props) {
   return (
     <div className="movie-grid">
       {movies.map((movie) => (
-        <div key={movie.id} className="movie-card">
+        <div key={movie.id} className="movie-card highlight">
           <MovieCard movie={movie} />
         </div>
       ))}
