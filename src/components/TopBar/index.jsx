@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 function TopBar({ tabs, selectedTab, onTabChange, onSearch }) {
   const [searchText, setSearchText] = useState("");
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleSearchTextChange = (event) => {
     setSearchText(event.target.value);
@@ -13,6 +14,10 @@ function TopBar({ tabs, selectedTab, onTabChange, onSearch }) {
     onSearch(searchText);
   };
 
+  const toggleNavbar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="navbar-brand">
@@ -21,15 +26,14 @@ function TopBar({ tabs, selectedTab, onTabChange, onSearch }) {
       <button
         className="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
+        onClick={toggleNavbar}
         aria-controls="navbarNav"
-        aria-expanded="false"
+        aria-expanded={!isCollapsed}
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div className={`collapse navbar-collapse ${isCollapsed ? "" : "show"}`} id="navbarNav">
         <ul className="navbar-nav mr-auto">
           {tabs.map((tab) => (
             <li className="nav-item" key={tab.id}>
