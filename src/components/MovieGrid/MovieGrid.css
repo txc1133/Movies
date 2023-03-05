@@ -1,36 +1,34 @@
+/* Large screens */
 .movie-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 -10px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
 }
 
-.movie-card {
-  width: calc(20% - 20px);
-  margin: 0 10px 20px;
-  /* Adjust these values as needed for spacing and responsiveness */
+@media screen and (max-width: 1200px) {
+  /* Medium screens */
+  .movie-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
+
+@media screen and (max-width: 992px) {
+  /* Small screens */
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Extra small screens */
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 
 .highlight {
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-
-@media (max-width: 991px) {
-  .movie-card {
-    width: calc(25% - 20px);
-  }
-}
-
-@media (max-width: 767px) {
-  .movie-card {
-    width: calc(33.33% - 20px);
-  }
-}
-
-@media (max-width: 575px) {
-  .movie-card {
-    width: calc(50% - 20px);
-  }
 }
 
 .highlight:hover,
