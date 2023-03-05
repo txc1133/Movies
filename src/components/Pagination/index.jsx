@@ -1,14 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
-  const pages = [];
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
-
-  // Add current page and nearby pages to the array
-  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
-    pages.push(i);
-  }
+  const pages = Array.from(
+    { length: Math.min(totalPages, 5) },
+    (_, i) => currentPage + i - 2
+  ).filter((page) => page >= 1 && page <= totalPages);
 
   return (
     <nav aria-label="Page navigation example">
@@ -34,5 +33,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     </nav>
   );
 }
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
 
 export default Pagination;

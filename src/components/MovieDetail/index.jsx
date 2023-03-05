@@ -1,5 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
+import { IMAGE_URL } from "../../constants";
 import { getMovieDetails } from "../../services/movies";
 import "../MovieCard/MovieCard.css";
 
@@ -41,7 +42,7 @@ function MovieDetail() {
         <div className="col-md-4">
           <Suspense fallback={<div>Loading...</div>}>
             <LazyImage
-              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+              src={`${IMAGE_URL}${poster_path}`}
               alt={`${movie.title} Poster`}
               className="img-fluid rounded image-fade-in"
               onLoad={(event) => {

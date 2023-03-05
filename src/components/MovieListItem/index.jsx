@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
+import { IMAGE_URL } from "../../constants";
 import "../MovieCard/MovieCard.css";
 
 const LazyImage = lazy(() => import("../Image"));
@@ -11,7 +12,7 @@ function MovieListItem({ movie }) {
         <div className="col-3">
           <Suspense fallback={<div>Loading...</div>}>
             <LazyImage
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              src={`${IMAGE_URL}${movie.poster_path}`}
               alt={`${movie.title} Poster`}
               className="img-fluid rounded image-fade-in"
               onLoad={(event) => {
